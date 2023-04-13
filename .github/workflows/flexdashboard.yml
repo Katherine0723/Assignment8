@@ -31,23 +31,14 @@ jobs:
                any::tidyr
                any::ggplot2
                any::lubridate
-               any::googleway
+               any::gt
                any::purrr
-               any::leaflet
-               any::gt
-               any::paletteer
-               any::flexdashboard
-               any::sf
-               any::ggmap
-               any::tmap
-               any::tidycensus
-               any::osmdata
-               any::tigris
-               any::viridis
                any::tidyverse
-               any::gt
-               any::ggthemes
+               any::flexdashboard
+               any::tidycensus
                any::plotly
+               any::paletteer
+               
                   
       - name: Render document
         uses: quarto-dev/quarto-actions/render@v2
