@@ -5,52 +5,47 @@ name: Render Report
 jobs:
   build-deploy:
     runs-on: ubuntu-latest
-    
+
     permissions:
         contents: write
-        
+
     steps:
       - name: Check out repository
         uses: actions/checkout@v3
-
-      - name: Set up Quarto
-        uses: quarto-dev/quarto-actions/setup@v2
 
       - name: Setup R
         uses: r-lib/actions/setup-r@v2
         with:
           r-version: '4.2.0' # The R version to download (if necessary) and use.
- 
+
       - name: Install packages
         uses: r-lib/actions/setup-r-dependencies@v2
         with:
-            packages:
-               any::knitr
-               any::rmarkdown
-               any::dplyr
-               any::tidyr
-               any::ggplot2
-               any::lubridate
-               any::gt
-               any::purrr
-               any::tidyverse
-               any::flexdashboard
-               any::tidycensus
-               any::plotly
-               any::paletteer
-               
-                  
+          packages:
+            - knitr
+            - rmarkdown
+            - dplyr
+            - tidyr
+            - ggplot2
+            - lubridate
+            - gt
+            - purrr
+            - tidyverse
+            - flexdashboard
+            - tidycensus
+            - plotly
+            - paletteer
+
       - name: Render document
-        uses: quarto-dev/quarto-actions/render@v2
+        run: Rscript -e "rmarkdown::render('A8.Rmd', output_format = 'html_document')"
         env:
           MAPS_API_KEY: ${{ secrets.MAPS_API_KEY }}
-        with:
-          to: html
-          path: A8.rmd
+
       - name: Setup git config
         run: |
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
+
       - name: Commit
         run: |
           git add .
