@@ -7,6 +7,7 @@ editor: visual
 ## 1.3 Please create 1 ggplotly of Hennepin County using sf, ggmap, tidycensus, ggplot, and plotly; which describes a Census Blockgroup level 2020 American Community Survey (ACS) esimate/feature of your choosing (15 pts)
 
 ```{r}
+Sys.getenv("MAPS_API_KEY")
 options(tigris_use_cache = TRUE)
 mn_education.df <- get_acs(
   geography = "tract",
