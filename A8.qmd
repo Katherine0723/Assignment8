@@ -4,6 +4,16 @@ format: html
 editor: visual
 ---
 
+```{r}
+library(tidyverse)
+library(lubridate)
+library(gt)
+library(paletteer)
+library(plotly)
+
+library(tidycensus, quietly = TRUE)
+```
+
 ## 1.3 Please create 1 ggplotly of Hennepin County using sf, ggmap, tidycensus, ggplot, and plotly; which describes a Census Blockgroup level 2020 American Community Survey (ACS) esimate/feature of your choosing (15 pts)
 
 ```{r}
@@ -43,4 +53,3 @@ mn_education_plotly <- ggplotly(mn_education_plot, tooltip = "text") %>%
 
 mn_education_plotly
 ```
-
