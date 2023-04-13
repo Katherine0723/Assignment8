@@ -1,0 +1,115 @@
+---
+title: "Assignment8"
+author: "Katherine"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+---
+
+
+
+## 1.3 Please create 1 ggplotly of Hennepin County using sf, ggmap, tidycensus, ggplot, and plotly; which describes a Census Blockgroup level 2020 American Community Survey (ACS) esimate/feature of your choosing (15 pts)
+
+
+
+```{r setup, include = FALSE, echo = FALSE}
+
+library(lubridate)
+library(gt)
+library(paletteer)
+library(flexdashboard)
+library(sf, quietly = TRUE)
+library(ggmap, quietly = TRUE)
+library(tmap, quietly = TRUE)
+library(tidycensus, quietly = TRUE)
+library(leaflet, quietly = TRUE)
+library(osmdata, quietly = TRUE)
+library(tigris, quietly = TRUE)
+library(dplyr, quietly = TRUE)
+library(stringr, quietly = TRUE)
+library(viridis, quietly = TRUE)
+library(tidyverse, quietly = TRUE)
+library(gt,quietly = TRUE)
+library(ggthemes, quietly = TRUE)
+library(janitor)
+library(plotly, quietly = TRUE)
+
+#Working directory for .RMD
+knitr::opts_knit$set(echo = TRUE,
+                     root.dir = rprojroot::find_rstudio_root_file())
+
+#Controlling figure output in markdown
+knitr::opts_chunk$set(
+#  fig.height =   
+  fig.width = 10,
+#  fig.asp = .5,
+  out.width = "60%",
+#  out.height = 
+ fig.align  = "center",
+  cache = FALSE,
+  eval  = TRUE,
+  echo  = FALSE,
+  warning = FALSE
+)
+
+#My Colours (from viridis)
+my_purple <- "#440154FF"
+my_yellow <- "#FDE725FF"
+
+#Set Theme for ggplot2
+theme_set(theme_bw() + theme(plot.title = element_text(hjust = 0.5), legend.position = "bottom"))
+
+#Set Scientific notation output and decimal places for knitr
+options(scipen = 999)
+options(digits = 4)
+options(dplyr.summarise.inform = FALSE)
+```
+
+
+
+Column {data-width=800}
+-----------------------------------------------------------------------
+
+### Chart A
+
+```{r}
+options(tigris_use_cache = TRUE)
+mn_education.df <- get_acs(
+  geography = "tract",
+  variables = "B15003_022E", # Code for the population with a bachelor's degree or higher
+  state     = "MN",
+  county    = "Hennepin",
+  year      = 2020,
+  geometry  = TRUE
+) 
+
+mn_education.df <- mn_education.df %>%
+  mutate(
+    text_label = str_c("Population with Bachelor's degree or higher", estimate)
+  )
+
+# ggplot
+mn_education_plot <- ggplot(data = mn_education.df) +
+  geom_sf(aes(fill = estimate, label = text_label)) +
+  scale_fill_continuous(name = "Population with\nBachelor's degree or higher",
+                        labels = scales::comma_format(),
+                        low = "lightblue", high = "darkblue") +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    legend.text = element_text(size = 10),
+    legend.title = element_text(size = 12)
+  ) +
+  labs(title = "Hennepin County: Population with Bachelor's degree or higher (2020)")
+
+mn_education_plotly <- ggplotly(mn_education_plot, tooltip = "text") %>%
+  style(hoveron = "fills")
+
+
+mn_education_plotly
+
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
