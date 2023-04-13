@@ -15,25 +15,13 @@ output:
 
 ```{r setup, include = FALSE, echo = FALSE}
 
+library(tidyverse)
 library(lubridate)
 library(gt)
 library(paletteer)
+library(plotly)
 library(flexdashboard)
-library(sf, quietly = TRUE)
-library(ggmap, quietly = TRUE)
-library(tmap, quietly = TRUE)
 library(tidycensus, quietly = TRUE)
-library(leaflet, quietly = TRUE)
-library(osmdata, quietly = TRUE)
-library(tigris, quietly = TRUE)
-library(dplyr, quietly = TRUE)
-library(stringr, quietly = TRUE)
-library(viridis, quietly = TRUE)
-library(tidyverse, quietly = TRUE)
-library(gt,quietly = TRUE)
-library(ggthemes, quietly = TRUE)
-library(janitor)
-library(plotly, quietly = TRUE)
 
 #Working directory for .RMD
 knitr::opts_knit$set(echo = TRUE,
